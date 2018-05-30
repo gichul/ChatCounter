@@ -1,53 +1,42 @@
 package edu.handong.csee.java.hw3;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.io.File;
 
 public class DataReader {
 	
-	public void sumOfData(String args) {
-		ArrayList<String> list = new ArrayList<String>(); 
+		/*
+
+			
+		ArrayList<String> fileNames=new ArrayList();
+		// TODO Auto-generated method stub		
+		String pathName=args[0];
 		
-		String filePath=args;
+		File files=new File(pathName);
+	
 		
-		File files = new File(filePath); 
-		File[] listOfFile = files.listFiles(); 
-
-
-		String fileName ; 
-
-		for(File f: listOfFile) { 
-			fileName = f.getName();
-
-
-
-			if(fileName.contains(".txt")) {
-				DataReaderForTXT reader1 = new DataReaderForTXT(fileName ,filePath);
-				for(String e: reader1.readTXT()) { 
-					list.add(e);
-				}
-			}
-			else if(fileName.contains(".csv")) {
-
-				DataReaderForCSV reader2 = new DataReaderForCSV(fileName, filePath);
-				for(String e: reader2.readCSV())
-					list.add(e);
-
-			}
-			else {
-				System.out.println("Can't read the format");
-			}
+		for(File fileNames : ) {
+			fileName.add(fileNames);
 		}
 		
+		void getDirectory(String strDir){
+	
 		
 	}
+
+
+
 	
-	
-	public int counter=0;
-	
-	public int counter(ArrayList<String> list) {
-		return list;
-	}
-}
-	
+
+
+
+
+
+ * 
++ getData();
++ getDirectory(String strDir): File
++ getListOfFilesFromDirectory(File dataDir): File[]
++ readFiles(Files[] files): ArrayList<String>
+
+ */
 }
