@@ -7,22 +7,6 @@ import java.util.Scanner;
 
 public class Main {
 
-
-	public static void main(String[] args) {
-
-		
-		DataReader data=new DataReader();
-		
-		data.sumOfData(args[0]);
-				
-
-
-		}
-		DataReader read = new DataReader();
-
-		read.counter(list);
-
-
 	}
 
 
