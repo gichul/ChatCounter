@@ -14,13 +14,22 @@ import java.util.ArrayList;
  *
  */
 
-public class DataReaderForTXT {
+public class DataReaderForTXT extends DataReader implements Runnable {
 	
 	Date d;
 	String name,time,date,message;
-	ArrayList<String> unitedData = new ArrayList<>();
 	
 	private String fileName; 
+	/**
+	 * run method to to run thread
+	 */
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+		readTxtFile();
+	}
+	
 	/**
 	 * this is Constructor
 	 * @param fileName
@@ -33,10 +42,10 @@ public class DataReaderForTXT {
 	 * distinguish the contents of TxtFile 
 	 * @param fileName
 	 */
-	public  void readTxtFile(String fileName) {
+	synchronized public void readTxtFile() {
 		Scanner inputStream=null;
 		try {
-			inputStream=new Scanner(new File(fileName));   //무슨 읜미가 있길래 ??
+			inputStream=new Scanner(new File(fileName));   
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -77,7 +86,8 @@ public class DataReaderForTXT {
 					e.printStackTrace();
 				}
 				time = newTime.format(d);
-				unitedData.add(date +" " +time +"   "+"\""+name+"\"\"" +message+"\"");
+			//	System.out.println(date +" " +time +"   "+"\""+name+"\"\"" +message+"\"");	
+				Home3Main.unitedData.add(date +" " +time +" "+"&*"+name+"&*\"" +message+"\"");
 			}
 			
 		}
@@ -86,6 +96,7 @@ public class DataReaderForTXT {
 	}
 
 }
+
 
 
 

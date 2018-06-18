@@ -1,6 +1,9 @@
 package edu.handong.csee.java.hw3;
 
+
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.io.File;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -19,12 +22,11 @@ public class Home3Main {
 	static String outputPath;
 	boolean verbose;
 	boolean help;
+	static ArrayList<String> unitedData=new ArrayList<String>();
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		ArrayList<String> list=new ArrayList<String>();
-		ArrayList<String> combinedData=new ArrayList<String>();
 		
 
 		Home3Main way = new Home3Main();
@@ -36,28 +38,59 @@ public class Home3Main {
 		
 		File[] fileNames=files.listFiles();
 		
+		
+		ArrayList<DataReader> Runners = new ArrayList<DataReader>();
+
+		// this method returns the number of available threads
+		
+		int numOfCoresInMyCPU = Runtime.getRuntime().availableProcessors();
+		System.out.println("The number of cores of my system: " + numOfCoresInMyCPU);
+		
+		ExecutorService executor = Executors.newFixedThreadPool(numOfCoresInMyCPU);
+
+
+
+		
+		Runnable worker = null;
+		
 		for(File f : fileNames) {
 			String fileName=f.getName();
 	
 			if(fileName.contains(".txt")) {
-				DataReaderForTXT txtFile=new DataReaderForTXT(fileName);
-				txtFile.readTxtFile(fileName);
+				worker =new DataReaderForTXT(fileName);
+				executor.execute(worker);
+				Runners.add((DataReader) worker);
 				
-				for(int i=0;i<txtFile.unitedData.size();i++) {
-					combinedData.add(txtFile.unitedData.get(i));
-				}
 			}
 			
 			else if(fileName.contains(".csv")) {
-				DataReaderForCSV csvFile=new DataReaderForCSV(fileName);
-				csvFile.readTxtFile();
-				for(int i=0;i<csvFile.unitedData.size();i++) {
-					combinedData.add(csvFile.unitedData.get(i));
-				}
+				worker =new DataReaderForCSV(fileName);
+				executor.execute(worker);
+				Runners.add((DataReader) worker);
+
 			}
-			
 		}
-		Counter=new ChatMessageCounter(combinedData);
+		
+		
+
+		executor.execute(worker);
+		Runners.add((DataReader) worker);
+
+
+		executor.shutdown(); // not to accept any new threads
+
+		while (!executor.isTerminated()) {
+		}
+
+		for(String s:Home3Main.unitedData) {
+		//	System.out.println(s);
+		}
+		
+
+		
+
+		
+		Counter=new ChatMessageCounter();
 		Counter.split();
 		Counter.count();
 		
@@ -67,7 +100,10 @@ public class Home3Main {
 			
 		
 	}
-
+	/**
+	 * mehtod to CLI
+	 * @param args
+	 */
 
 	private void run(String[] args) {
 		Options options = createOptions();

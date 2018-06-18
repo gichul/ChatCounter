@@ -1,6 +1,7 @@
 package edu.handong.csee.java.hw3;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 
 /**
@@ -14,7 +15,7 @@ public class ChatMessageCounter {
 	private int counter=0;
 	private String line;
 	private String date,name,message;
-
+ 
 	HashMap<String , Integer> result = new HashMap<String , Integer>();
 	ArrayList<String> list=new ArrayList<String>();
 	ArrayList<String> person=new ArrayList<String>();
@@ -23,8 +24,8 @@ public class ChatMessageCounter {
 	 * constructor of ChatMessageCounter
 	 * @param contents
 	 */
-	public ChatMessageCounter(ArrayList<String> contents) {
-		this.list=contents;
+	public ChatMessageCounter() {
+
 	}
 	/**
 	 * count method counting the numbers of chatting
@@ -49,14 +50,21 @@ public class ChatMessageCounter {
 	 * split method to distinguish the data name, date, message 
 	 */
 	public void split() {
-		for(int i=0;i<list.size();i++) {
-		int idx=list.get(i).indexOf("\"\"");
 		
-		date=list.get(i).substring(0,16);
-		name=(list.get(i).substring(20,idx));
-		message=list.get(i).substring(idx+2);
-		person.add(name);
+		for(int i=0;i<Home3Main.unitedData.size();i++) {
+			String[] contents = Home3Main.unitedData.get(i).split("&[*]");
+			
+			date=contents[0];
+			name=contents[1];
+			message=contents[2];
+			person.add(name);
+			
+
+
 		}
+		
+
+
 	}
 	
 	
